@@ -1,0 +1,96 @@
+# Section spec for the protocol drafter. Licensed CC BY 4.0.
+document: protocol
+standard: ICH M11 (CeSHarP) structured protocol layout; ICH E6(R3), E8(R1), E9(R1)
+note: >-
+  Each section lists the study fields it may draw on. Keep the list narrow: the traceability check flags any number
+  not found in these fields. Edit guidance freely; it is the domain layer.
+sections:
+- number: '2'
+  heading: Introduction
+  fields:
+  - indication
+  - investigational_product
+  - mechanism
+  - rationale
+  - references
+  guidance: >-
+    Background on the disease and unmet need, the investigational product and its mechanism, and the rationale for
+    this trial. Benefit/risk in one short paragraph. No new efficacy claims.
+- number: '3'
+  heading: Trial Objectives, Endpoints and Estimands
+  fields:
+  - endpoints
+  - population
+  - arms
+  - rescue_therapy
+  - treatment_duration_weeks
+  guidance: >-
+    A table of objectives and endpoints grouped as primary, key secondary, secondary, exploratory, safety. For each
+    primary and key secondary endpoint, give an estimand (population, variable, intercurrent events incl. rescue
+    therapy, population-level summary) per ICH E9(R1).
+- number: '4'
+  heading: Trial Design
+  fields:
+  - design
+  - arms
+  - randomization_ratio
+  - blinding
+  - treatment_duration_weeks
+  - follow_up_weeks
+  - sample_size
+  - phase
+  guidance: >-
+    Overall design, arms, randomization and blinding, duration of participation, and the scientific rationale for
+    the design and dose choice. End-of-trial definition.
+- number: '5'
+  heading: Trial Population
+  fields:
+  - population
+  - age_min
+  - age_max
+  - key_inclusion
+  - key_exclusion
+  guidance: >-
+    Numbered inclusion and exclusion criteria. Keep each criterion testable. Do not add criteria that are not in
+    the synopsis; list likely missing ones under open_questions instead.
+- number: '6'
+  heading: Trial Intervention
+  fields:
+  - investigational_product
+  - arms
+  - blinding
+  - rescue_therapy
+  guidance: >-
+    Description of each arm's intervention, dose and regimen, blinding of product, rescue therapy and prohibited/permitted
+    concomitant therapy. Mark manufacturing and packaging details [TBD].
+- number: '8'
+  heading: Trial Assessments and Procedures
+  fields:
+  - visits
+  - endpoints
+  - safety_monitoring
+  guidance: >-
+    Efficacy assessments (how each endpoint is measured), safety assessments, and a short note that timing follows
+    the Schedule of Activities (Section 1.3). Do not restate the full SoA.
+- number: '9'
+  heading: Adverse Events and Safety Reporting
+  fields:
+  - safety_monitoring
+  - investigational_product
+  guidance: >-
+    AE/SAE definitions, collection period, reporting timelines (standard ICH E2A timelines are fine but list them
+    as assumptions), and any product-specific safety monitoring.
+- number: '10'
+  heading: Statistical Considerations
+  fields:
+  - sample_size
+  - power_assumptions
+  - analysis_population
+  - primary_analysis
+  - multiplicity
+  - endpoints
+  - arms
+  - randomization_ratio
+  guidance: >-
+    Sample size justification restating the power assumptions, analysis sets, primary analysis method, handling
+    of intercurrent events consistent with Section 3, and multiplicity control.

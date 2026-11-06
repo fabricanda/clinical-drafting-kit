@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fabricanda-clinical-drafting-kit"
+version = "0.1.0.dev0"
+description = "AI first drafts of clinical development documents (protocols first), with source traceability, deterministic checks and human sign-off."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = ["anthropic>=2.5", "pydantic>=2.6", "pyyaml>=6", "python-docx>=1.1"]
+
+[project.optional-dependencies]
+openai = ["openai>=1.40"]
+dev = ["pytest"]
+
+[project.scripts]
+fcd = "fcd.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fcd*"]
+
+[tool.setuptools.package-data]
+fcd = ["specs/*.yaml"]

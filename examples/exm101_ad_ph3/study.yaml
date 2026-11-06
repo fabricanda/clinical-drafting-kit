@@ -1,0 +1,62 @@
+# FICTIONAL example. "EXM-101" is a made-up compound; no company's confidential data is used.
+# Design choices mirror public Phase 3 atopic dermatitis trials (e.g., SOLO 1/2 for dupilumab).
+protocol_id: EXM-101-301
+title: "A Phase 3, Randomized, Double-Blind, Placebo-Controlled Study of Oral EXM-101 in Adults and Adolescents with Moderate-to-Severe Atopic Dermatitis"
+sponsor: "Example Therapeutics, Inc. (fictional)"
+phase: "Phase 3"
+indication: "Moderate-to-severe atopic dermatitis (AD) not adequately controlled with topical therapies"
+investigational_product: "EXM-101 tablets, once daily"
+mechanism: "an oral small-molecule inhibitor of IL-4 and IL-13 signaling (hypothetical mechanism for illustration)"
+rationale: "IL-4/IL-13 blockade is clinically validated in AD; an oral agent acting on the same pathway could offer biologic-level efficacy without injections. Phase 2b showed dose-dependent EASI improvement at Week 16 with an acceptable safety profile."
+population: "Adults and adolescents with moderate-to-severe AD"
+age_min: 12
+age_max: null
+key_inclusion:
+  - "Chronic AD diagnosed at least 1 year before screening"
+  - "EASI score of 16 or higher at screening and baseline"
+  - "Validated IGA (vIGA-AD) score of 3 or 4 at screening and baseline"
+  - "Body surface area involvement of 10% or more at screening and baseline"
+  - "Inadequate response to topical therapy within 6 months before screening"
+  - "Weekly average Peak Pruritus NRS of 4 or higher at baseline"
+key_exclusion:
+  - "Prior treatment with dupilumab, tralokinumab, lebrikizumab or an oral JAK inhibitor within 12 weeks of baseline"
+  - "Systemic corticosteroids or immunosuppressants within 4 weeks of baseline"
+  - "Active infection requiring systemic treatment within 2 weeks of baseline"
+  - "ALT or AST above 2 times the upper limit of normal at screening"
+design: "Multicenter, randomized, double-blind, placebo-controlled, parallel-group study with a 16-week treatment period"
+arms:
+  - {id: A, name: "EXM-101 high dose", dose: "200 mg", regimen: "orally once daily"}
+  - {id: B, name: "EXM-101 low dose", dose: "100 mg", regimen: "orally once daily"}
+  - {id: C, name: "Placebo", dose: "matching placebo", regimen: "orally once daily"}
+randomization_ratio: "1:1:1, stratified by baseline vIGA-AD (3 vs 4) and age group (adolescent vs adult)"
+blinding: "Double-blind; tablets identical in appearance"
+sample_size: 600
+power_assumptions: "200 per arm gives over 95% power for EASI-75 (assumed 45% vs 15%) and over 90% power for vIGA-AD 0/1 (assumed 35% vs 10%) at two-sided alpha 0.05"
+treatment_duration_weeks: 16
+follow_up_weeks: 4
+endpoints:
+  - {id: P1, name: "Proportion achieving EASI-75", timepoint: "Week 16", type: primary}
+  - {id: P2, name: "Proportion achieving vIGA-AD 0 or 1 with at least a 2-point reduction", timepoint: "Week 16", type: primary}
+  - {id: S1, name: "Proportion with at least a 4-point improvement in weekly average Peak Pruritus NRS", timepoint: "Week 16", type: key_secondary}
+  - {id: S2, name: "Proportion achieving EASI-90", timepoint: "Week 16", type: key_secondary}
+  - {id: S3, name: "Percent change from baseline in EASI", timepoint: "Week 2, Week 4, Week 8, Week 16", type: secondary}
+  - {id: X1, name: "Change from baseline in serum TARC and total IgE", timepoint: "Week 16", type: exploratory}
+  - {id: SF1, name: "Incidence of treatment-emergent adverse events", timepoint: "Through Week 20", type: safety}
+visits:
+  - {name: Screening, week: -4, window_days: 0, procedures: [Informed consent, Eligibility, Medical history, EASI, vIGA-AD, Peak Pruritus NRS, Safety labs, Pregnancy test]}
+  - {name: Baseline, week: 0, window_days: 0, procedures: [Randomization, EASI, vIGA-AD, Peak Pruritus NRS, Safety labs, 'Biomarkers (TARC and IgE)', Dispense study drug]}
+  - {name: Week 2, week: 2, window_days: 3, procedures: [EASI, vIGA-AD, Peak Pruritus NRS, AE review]}
+  - {name: Week 4, week: 4, window_days: 3, procedures: [EASI, vIGA-AD, Peak Pruritus NRS, Safety labs, AE review, Dispense study drug]}
+  - {name: Week 8, week: 8, window_days: 5, procedures: [EASI, vIGA-AD, Peak Pruritus NRS, Safety labs, AE review, Dispense study drug]}
+  - {name: Week 12, week: 12, window_days: 5, procedures: [EASI, vIGA-AD, Peak Pruritus NRS, AE review, Dispense study drug]}
+  - {name: Week 16 (End of Treatment), week: 16, window_days: 5, procedures: [EASI, vIGA-AD, Peak Pruritus NRS, Safety labs, 'Biomarkers (TARC and IgE)', AE review]}
+  - {name: Week 20 (Follow-up), week: 20, window_days: 7, procedures: [Safety labs, AE review]}
+rescue_therapy: "Topical corticosteroids allowed as rescue for intolerable symptoms after Week 2; systemic rescue leads to study drug discontinuation"
+safety_monitoring: "Liver function tests at each lab visit; hematology and chemistry; ECG at screening and Week 16 [TBD whether needed]; independent data monitoring committee reviews unblinded safety data quarterly"
+analysis_population: "Full analysis set: all randomized participants, analyzed by randomized arm"
+primary_analysis: "Cochran-Mantel-Haenszel test stratified by randomization strata; participants who use rescue therapy or have missing Week 16 data counted as non-responders"
+multiplicity: "Graphical approach controlling family-wise type I error at 0.05 across both doses and the primary and key secondary endpoints"
+references:
+  - "ICH M11 Clinical electronic Structured Harmonised Protocol (CeSHarP)"
+  - "ICH E9(R1) Addendum on estimands"
+  - "Simpson EL et al. Two Phase 3 trials of dupilumab versus placebo in atopic dermatitis. N Engl J Med 2016;375:2335-48"

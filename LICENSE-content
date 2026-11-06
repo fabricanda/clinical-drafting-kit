@@ -1,0 +1,7 @@
+Section specs (fcd/specs/), prompts (fcd/prompts.py text), skills (.claude/skills/), templates, examples and documentation in this repository are licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Attribution: "Clinical Drafting Kit, maintained by Fabricanda (https://fabricanda.ai)".
+
+Source code is licensed separately under the Apache License 2.0 (see LICENSE).
