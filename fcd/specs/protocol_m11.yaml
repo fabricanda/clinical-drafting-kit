@@ -1,10 +1,32 @@
 # Section spec for the protocol drafter. Licensed CC BY 4.0.
+# Sections 12-14 (appendices: supporting details, glossary, references) are rendered, not drafted.
 document: protocol
 standard: ICH M11 (CeSHarP) structured protocol layout; ICH E6(R3), E8(R1), E9(R1)
 note: >-
   Each section lists the study fields it may draw on. Keep the list narrow: the traceability check flags any number
   not found in these fields. Edit guidance freely; it is the domain layer.
 sections:
+- number: '1'
+  heading: Protocol Summary (1.1 Synopsis, 1.2 Trial Schema)
+  fields:
+  - title
+  - protocol_id
+  - phase
+  - indication
+  - population
+  - design
+  - arms
+  - randomization_ratio
+  - blinding
+  - sample_size
+  - treatment_duration_weeks
+  - follow_up_weeks
+  - endpoints
+  guidance: >-
+    1.1: a concise synopsis restating title, rationale in one sentence, primary and key secondary objectives with
+    endpoints, population, design, arms with doses, number of participants and duration of participation. 1.2: a
+    plain-text trial schema (screening, randomization, treatment arms, follow-up with week numbers). Do not write
+    the Schedule of Activities; it is rendered from data as 1.3. Every number must match the synopsis exactly.
 - number: '2'
   heading: Introduction
   fields:
@@ -63,6 +85,18 @@ sections:
   guidance: >-
     Description of each arm's intervention, dose and regimen, blinding of product, rescue therapy and prohibited/permitted
     concomitant therapy. Mark manufacturing and packaging details [TBD].
+- number: '7'
+  heading: Participant Discontinuation of Trial Intervention and Withdrawal from the Trial
+  fields:
+  - discontinuation_criteria
+  - rescue_therapy
+  - safety_monitoring
+  - visits
+  guidance: >-
+    7.1 criteria for permanent discontinuation of trial intervention, 7.2 temporary interruption if applicable,
+    7.3 participant withdrawal from the trial, 7.4 lost to follow-up. State which assessments occur at an early-termination
+    visit, consistent with the end-of-treatment visit in the SoA. Use only criteria in the synopsis; list obvious
+    gaps (e.g. pregnancy, liver-test stopping rules) as open_questions, not as text.
 - number: '8'
   heading: Trial Assessments and Procedures
   fields:
@@ -94,3 +128,14 @@ sections:
   guidance: >-
     Sample size justification restating the power assumptions, analysis sets, primary analysis method, handling
     of intercurrent events consistent with Section 3, and multiplicity control.
+- number: '11'
+  heading: Trial Oversight and Other General Considerations
+  fields:
+  - trial_oversight
+  - sponsor
+  - blinding
+  - safety_monitoring
+  guidance: >-
+    Regulatory and ethical conduct per ICH E6(R3), informed consent process, committees (DMC, steering, adjudication)
+    and their remit, data protection, risk-based quality management and monitoring approach, data handling and record
+    keeping, publication policy. Keep generic statements short; mark sponsor-specific policies [TBD].

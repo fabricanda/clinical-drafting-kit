@@ -56,6 +56,13 @@ safety_monitoring: "Liver function tests at each lab visit; hematology and chemi
 analysis_population: "Full analysis set: all randomized participants, analyzed by randomized arm"
 primary_analysis: "Cochran-Mantel-Haenszel test stratified by randomization strata; participants who use rescue therapy or have missing Week 16 data counted as non-responders"
 multiplicity: "Graphical approach controlling family-wise type I error at 0.05 across both doses and the primary and key secondary endpoints"
+discontinuation_criteria:
+  - "Participant decision to stop study drug"
+  - "ALT or AST above 5 times the upper limit of normal, or above 3 times with total bilirubin above 2 times the upper limit of normal"
+  - "Pregnancy"
+  - "Need for systemic rescue therapy"
+  - "Any adverse event that, in the investigator's judgment, makes continued dosing unsafe"
+trial_oversight: "Independent data monitoring committee reviews unblinded safety data quarterly; risk-based monitoring with centralized statistical monitoring and targeted source data verification of primary endpoint data; sponsor steering committee"
 references:
   - "ICH M11 Clinical electronic Structured Harmonised Protocol (CeSHarP)"
   - "ICH E9(R1) Addendum on estimands"

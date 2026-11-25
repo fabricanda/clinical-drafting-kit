@@ -5,6 +5,8 @@
   fcd check  --out out/ [--inject-error]
   fcd approve 5 --by "Jane Reviewer" --out out/
   fcd export --out out/
+  fcd validate examples/exm101_ad_ph3/study.yaml
+  fcd schema > schemas/study.schema.json
 """
 from __future__ import annotations
 
@@ -130,6 +132,37 @@ def cmd_approve(a):
     print(f"Section {a.section} approved by {a.by}.")
 
 
+def cmd_validate(a):
+    """Validate a study file: schema errors, empty or [TBD] fields, and design checks that need no model."""
+    from pydantic import ValidationError
+
+    raw = yaml.safe_load(pathlib.Path(a.study).read_text()) or {}
+    try:
+        syn = Synopsis.model_validate(raw)
+    except ValidationError as e:
+        print(f"{a.study}: {e.error_count()} problem(s) to fix before drafting:")
+        for err in e.errors():
+            print(f"  - {'.'.join(str(x) for x in err['loc'])}: {err['msg']}")
+        sys.exit(1)
+    d = syn.model_dump()
+    gaps = [k for k, v in d.items() if v in ("", [], None)]
+    tbd = [k for k, v in d.items() if "[TBD" in json.dumps(v)]
+    filled = len(d) - len(gaps)
+    print(f"{a.study}: valid. {filled}/{len(d)} fields filled.")
+    for k in gaps:
+        print(f"  - empty: {k}")
+    for k in tbd:
+        print(f"  - contains [TBD]: {k}")
+    design = checks.endpoint_visit_alignment(syn)
+    _print_findings(design) if design else print("  Endpoint timepoints all have a matching visit.")
+    if any(f.severity == "critical" for f in design):
+        sys.exit(1)
+
+
+def cmd_schema(a):
+    print(json.dumps(Synopsis.model_json_schema(), indent=2))
+
+
 def cmd_export(a):
     out = pathlib.Path(a.out)
     st, syn, drafts = _state(out)
@@ -151,6 +184,8 @@ def main(argv=None):
     ap = sp.add_parser("approve"); ap.add_argument("section"); ap.add_argument("--by", required=True)
     ap.add_argument("--override", help="reason for approving despite critical findings"); ap.add_argument("--out", default="out")
     ap.set_defaults(fn=cmd_approve)
+    v = sp.add_parser("validate", help="check a study file before drafting"); v.add_argument("study"); v.set_defaults(fn=cmd_validate)
+    sc = sp.add_parser("schema", help="print the study JSON Schema"); sc.set_defaults(fn=cmd_schema)
     e = sp.add_parser("export"); e.add_argument("--out", default="out"); e.set_defaults(fn=cmd_export)
     a = p.parse_args(argv)
     a.fn(a)

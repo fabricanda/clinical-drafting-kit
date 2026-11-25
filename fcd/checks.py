@@ -27,6 +27,7 @@ def _numbers(text: str) -> set:
     text = GUIDELINE.sub(" ", text)
     text = re.sub(r"(?:Sections?|§)\s*\d+(?:\.\d+)*(?:\s*(?:and|,|-)\s*\d+(?:\.\d+)*)*", " ", text)  # cross-references
     text = re.sub(r"^\s*\d+(\.\d+)*[.)]\s", " ", text, flags=re.M)  # list numbering
+    text = re.sub(r"(?:^|(?<=\*\*)|(?<=#\s))\s*\d+\.\d+(?:\.\d+)*(?=\s)", " ", text, flags=re.M)  # subsection headings, e.g. **7.1 Title
     text = re.sub(r"\[\^?\d+\]", " ", text)
     return {n for n in NUM.findall(text) if n not in IGNORE}
 
@@ -66,16 +67,18 @@ def cross_section(syn: Synopsis, drafts: Dict[str, SectionDraft]) -> List[Findin
     def has(num, needle):
         return num in drafts and needle.lower() in drafts[num].text.lower()
 
-    for num in ("4", "10"):
+    for num in ("1", "4", "10"):
         if num in drafts and not has(num, str(syn.sample_size)):
             out.append(Finding(severity="major", sections=[num],
                                issue=f"Section {num} does not state the planned sample size ({syn.sample_size}).",
                                suggestion="State the sample size exactly as in the synopsis."))
-    if "6" in drafts:
+    for num in ("1", "6"):
+        if num not in drafts:
+            continue
         for a in syn.arms:
-            if not has("6", a.dose):
-                out.append(Finding(severity="critical", sections=["6"],
-                                   issue=f"Section 6 does not state the dose for arm '{a.name}' as '{a.dose}'.",
+            if not has(num, a.dose):
+                out.append(Finding(severity="critical", sections=[num],
+                                   issue=f"Section {num} does not state the dose for arm '{a.name}' as '{a.dose}'.",
                                    suggestion="Correct the dose to match the synopsis."))
     for e in syn.endpoints:
         if e.type in ("primary", "key_secondary"):

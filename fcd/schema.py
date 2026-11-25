@@ -59,6 +59,8 @@ class Synopsis(BaseModel):
     primary_analysis: str
     multiplicity: str
     references: List[str] = []
+    discontinuation_criteria: List[str] = Field(default_factory=list, description="Reasons a participant stops trial intervention or is withdrawn (M11 Section 7)")
+    trial_oversight: str = Field("", description="Committees (e.g. DMC, steering), monitoring approach, data handling (M11 Section 11)")
 
 
 # ---------- Output: one drafted protocol section ----------

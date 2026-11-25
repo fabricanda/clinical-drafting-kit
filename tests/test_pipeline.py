@@ -55,7 +55,7 @@ def test_live_request_shape(monkeypatch):
     client = anthropic.Anthropic(api_key="test", base_url="https://api.test",
                                  http_client=httpx.Client(transport=httpx.MockTransport(handler)))
     monkeypatch.setattr(llm, "_client", lambda: client)
-    d, u = llm.draft_section(SYN, SECTIONS[2], [])
+    d, u = llm.draft_section(SYN, next(s for s in SECTIONS if s['number'] == '4'), [])
     b = seen["body"]
     assert b["model"] == "claude-opus-5-5"
     assert b["output_config"]["effort"] == "medium" and "format" in b["output_config"]
@@ -67,7 +67,7 @@ def test_live_request_shape(monkeypatch):
 def test_spec_loads_from_yaml():
     from fcd.template import sections
     secs = sections("protocol_m11")
-    assert [s["number"] for s in secs] == ["2", "3", "4", "5", "6", "8", "9", "10"]
+    assert [s["number"] for s in secs] == ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     assert all(s["fields"] and s["guidance"] for s in secs)
 
 
@@ -75,3 +75,43 @@ def test_provider_registry():
     assert providers.get("anthropic") is llm
     assert providers.get("grok").vendor == "xai"
     assert providers.get("xai").cfg["base_url"] == "https://api.x.ai/v1"
+
+
+def test_subsection_headings_are_not_untraced_numbers():
+    from fcd.schema import SectionDraft
+    d = SectionDraft(section_number="7", heading="x", text="**7.1 Discontinuation.** Stop.\n### 7.3 Withdrawal\n7.4 Lost to follow-up.",
+                     sources=[], assumptions=[], open_questions=[])
+    assert checks.untraced_numbers(SYN, d) == []
+    d.text = "Dose reduced to 37.5 mg."
+    assert any("37.5" in f.issue for f in checks.untraced_numbers(SYN, d))
+
+
+def test_offline_full_m11_draft_is_clean():
+    drafts = []
+    for s in SECTIONS:
+        drafts.append(offline.draft_section(SYN, s, drafts))
+    bad = [f for f in checks.run_all(SYN, drafts) if f.severity in ("critical", "major")]
+    assert bad == [], [f.issue for f in bad]
+
+
+def test_validate_flags_missing_visit(tmp_path, capsys):
+    import yaml, pytest
+    from fcd.cli import main
+    raw = SYN.model_dump()
+    raw["visits"] = [v for v in raw["visits"] if v["week"] != 16]
+    f = tmp_path / "s.yaml"
+    f.write_text(yaml.safe_dump(raw))
+    with pytest.raises(SystemExit):
+        main(["validate", str(f)])
+    assert "Week 16" in capsys.readouterr().out
+
+
+def test_validate_reports_schema_errors(tmp_path, capsys):
+    import pytest
+    from fcd.cli import main
+    f = tmp_path / "s.yaml"
+    f.write_text("protocol_id: X\nsample_size: lots\n")
+    with pytest.raises(SystemExit):
+        main(["validate", str(f)])
+    out = capsys.readouterr().out
+    assert "sample_size" in out and "title" in out

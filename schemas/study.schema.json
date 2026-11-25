@@ -1,0 +1,289 @@
+{
+  "$defs": {
+    "Arm": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "dose": {
+          "title": "Dose",
+          "type": "string"
+        },
+        "regimen": {
+          "title": "Regimen",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "dose",
+        "regimen"
+      ],
+      "title": "Arm",
+      "type": "object"
+    },
+    "Endpoint": {
+      "properties": {
+        "id": {
+          "description": "Stable ID, e.g. P1, S1",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "timepoint": {
+          "title": "Timepoint",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "primary",
+            "key_secondary",
+            "secondary",
+            "exploratory",
+            "safety"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "timepoint",
+        "type"
+      ],
+      "title": "Endpoint",
+      "type": "object"
+    },
+    "Visit": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "week": {
+          "title": "Week",
+          "type": "number"
+        },
+        "window_days": {
+          "default": 0,
+          "title": "Window Days",
+          "type": "integer"
+        },
+        "procedures": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Procedures",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "week",
+        "procedures"
+      ],
+      "title": "Visit",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "protocol_id": {
+      "title": "Protocol Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "sponsor": {
+      "title": "Sponsor",
+      "type": "string"
+    },
+    "phase": {
+      "title": "Phase",
+      "type": "string"
+    },
+    "indication": {
+      "title": "Indication",
+      "type": "string"
+    },
+    "investigational_product": {
+      "title": "Investigational Product",
+      "type": "string"
+    },
+    "mechanism": {
+      "title": "Mechanism",
+      "type": "string"
+    },
+    "rationale": {
+      "title": "Rationale",
+      "type": "string"
+    },
+    "population": {
+      "title": "Population",
+      "type": "string"
+    },
+    "age_min": {
+      "title": "Age Min",
+      "type": "integer"
+    },
+    "age_max": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Age Max"
+    },
+    "key_inclusion": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Key Inclusion",
+      "type": "array"
+    },
+    "key_exclusion": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Key Exclusion",
+      "type": "array"
+    },
+    "design": {
+      "title": "Design",
+      "type": "string"
+    },
+    "arms": {
+      "items": {
+        "$ref": "#/$defs/Arm"
+      },
+      "title": "Arms",
+      "type": "array"
+    },
+    "randomization_ratio": {
+      "title": "Randomization Ratio",
+      "type": "string"
+    },
+    "blinding": {
+      "title": "Blinding",
+      "type": "string"
+    },
+    "sample_size": {
+      "title": "Sample Size",
+      "type": "integer"
+    },
+    "power_assumptions": {
+      "title": "Power Assumptions",
+      "type": "string"
+    },
+    "treatment_duration_weeks": {
+      "title": "Treatment Duration Weeks",
+      "type": "integer"
+    },
+    "follow_up_weeks": {
+      "title": "Follow Up Weeks",
+      "type": "integer"
+    },
+    "endpoints": {
+      "items": {
+        "$ref": "#/$defs/Endpoint"
+      },
+      "title": "Endpoints",
+      "type": "array"
+    },
+    "visits": {
+      "items": {
+        "$ref": "#/$defs/Visit"
+      },
+      "title": "Visits",
+      "type": "array"
+    },
+    "rescue_therapy": {
+      "title": "Rescue Therapy",
+      "type": "string"
+    },
+    "safety_monitoring": {
+      "title": "Safety Monitoring",
+      "type": "string"
+    },
+    "analysis_population": {
+      "title": "Analysis Population",
+      "type": "string"
+    },
+    "primary_analysis": {
+      "title": "Primary Analysis",
+      "type": "string"
+    },
+    "multiplicity": {
+      "title": "Multiplicity",
+      "type": "string"
+    },
+    "references": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "References",
+      "type": "array"
+    },
+    "discontinuation_criteria": {
+      "description": "Reasons a participant stops trial intervention or is withdrawn (M11 Section 7)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Discontinuation Criteria",
+      "type": "array"
+    },
+    "trial_oversight": {
+      "default": "",
+      "description": "Committees (e.g. DMC, steering), monitoring approach, data handling (M11 Section 11)",
+      "title": "Trial Oversight",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_id",
+    "title",
+    "sponsor",
+    "phase",
+    "indication",
+    "investigational_product",
+    "mechanism",
+    "rationale",
+    "population",
+    "age_min",
+    "key_inclusion",
+    "key_exclusion",
+    "design",
+    "arms",
+    "randomization_ratio",
+    "blinding",
+    "sample_size",
+    "power_assumptions",
+    "treatment_duration_weeks",
+    "follow_up_weeks",
+    "endpoints",
+    "visits",
+    "rescue_therapy",
+    "safety_monitoring",
+    "analysis_population",
+    "primary_analysis",
+    "multiplicity"
+  ],
+  "title": "Synopsis",
+  "type": "object"
+}

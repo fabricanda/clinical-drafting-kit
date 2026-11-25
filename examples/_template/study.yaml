@@ -1,0 +1,38 @@
+# Blank study synopsis. Fill it in by hand, or ask your agent to run the synopsis-interview skill.
+# Leave a field as [TBD: what is needed] rather than guessing. Check with: fcd validate <this file>
+protocol_id: "[TBD]"
+title: "[TBD]"
+sponsor: "[TBD]"
+phase: "[TBD: e.g. Phase 2]"
+indication: "[TBD]"
+investigational_product: "[TBD: name, form, route]"
+mechanism: "[TBD]"
+rationale: "[TBD: why this trial, what prior data support it]"
+population: "[TBD]"
+age_min: 18
+age_max: null
+key_inclusion: ["[TBD]"]
+key_exclusion: ["[TBD]"]
+design: "[TBD: e.g. randomized, double-blind, placebo-controlled, parallel-group]"
+arms:
+  - {id: A, name: "[TBD]", dose: "[TBD]", regimen: "[TBD]"}
+  - {id: B, name: "Placebo", dose: "matching placebo", regimen: "[TBD]"}
+randomization_ratio: "[TBD: e.g. 1:1, stratified by ...]"
+blinding: "[TBD]"
+sample_size: 0
+power_assumptions: "[TBD: effect size, variability or response rates, alpha, power]"
+treatment_duration_weeks: 0
+follow_up_weeks: 0
+endpoints:
+  - {id: P1, name: "[TBD]", timepoint: "[TBD: week number]", type: primary}
+visits:
+  - {name: Screening, week: -4, window_days: 0, procedures: [Informed consent, Eligibility]}
+  - {name: Baseline, week: 0, window_days: 0, procedures: [Randomization]}
+rescue_therapy: "[TBD]"
+safety_monitoring: "[TBD]"
+analysis_population: "[TBD]"
+primary_analysis: "[TBD: model, handling of intercurrent events and missing data]"
+multiplicity: "[TBD]"
+discontinuation_criteria: []
+trial_oversight: "[TBD: DMC, steering committee, monitoring approach]"
+references: []
