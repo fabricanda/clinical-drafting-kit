@@ -33,8 +33,13 @@ def to_markdown(syn: Synopsis, drafts: List[SectionDraft], findings: List[Findin
          f"**Phase:** {syn.phase}  ", f"**Generated:** {dt.date.today().isoformat()} by the Fabricanda Clinical Drafting Kit ({model_label})", "",
          f"> {status_line(approvals, drafts)}", "",
          "> Drafting aid output for review by qualified professionals. Not validated for GxP use; not Part 11 compliant. See DISCLAIMER.md.", "",
-         "## 1.3 Schedule of Activities", "", "*Built directly from the synopsis visit table.*", "", soa_markdown(syn), ""]
-    for d in drafts:
+         ]
+    first = [d for d in drafts if d.section_number == "1"]
+    rest = [d for d in drafts if d.section_number != "1"]
+    for d in first:
+        L += [f"## {d.section_number} {d.heading}", "", d.text, ""]
+    L += ["## 1.3 Schedule of Activities", "", "*Built directly from the synopsis visit table.*", "", soa_markdown(syn), ""]
+    for d in rest:
         L += [f"## {d.section_number} {d.heading}", "", d.text, ""]
     L += ["---", "## Appendix A. Review findings", ""]
     if not findings:

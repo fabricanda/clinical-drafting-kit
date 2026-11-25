@@ -5,7 +5,7 @@ AI first drafts of clinical development documents, built so a qualified reviewer
 **Status: v0.1 in development.** The protocol drafter works today. Other tools are on the roadmap below.
 
 ## What it does
-You give it a structured study synopsis (YAML). It drafts a protocol in the ICH M11 layout, one section at a time, with any of three model providers. Then:
+You give it a structured study synopsis (YAML). It drafts a protocol in the ICH M11 layout (Sections 1 to 11), one section at a time, with any of three model providers. Then:
 
 - **Every number traces back to the synopsis.** Each section returns its text, its source links, its assumptions and its open questions.
 - **Deterministic checks run with no model.** They catch dose drift between sections, endpoints measured at a week with no visit, sample sizes that don't match, and numbers with no source.
@@ -15,7 +15,7 @@ You give it a structured study synopsis (YAML). It drafts a protocol in the ICH 
 The kit gets you a strong first draft faster. It does not replace medical writing, clinical, statistical or regulatory review. Read [DISCLAIMER.md](DISCLAIMER.md).
 
 ## Use it in a coding agent (Claude Code, Codex)
-Clone the repo and open it in your agent. Ask: *"Draft a protocol from examples/exm101_ad_ph3/study.yaml."* The agent follows `AGENTS.md` / `CLAUDE.md` and the skills in `.claude/skills/`, and it runs the same checks as the CLI.
+Clone the repo and open it in your agent. No study file yet? Ask: *"Interview me to build a study synopsis from these notes."* Have one? Ask: *"Draft a protocol from examples/exm101_ad_ph3/study.yaml."* The agent follows `AGENTS.md` / `CLAUDE.md` and the skills in `.claude/skills/`, and it runs the same checks as the CLI.
 
 ## Use the CLI
 ```bash
@@ -23,6 +23,7 @@ pip install -e ".[openai]"               # Python 3.10+
 fcd draft examples/exm101_ad_ph3/study.yaml --out out/ --offline   # no model, tests the pipeline
 export ANTHROPIC_API_KEY=...             # or OPENAI_API_KEY / XAI_API_KEY
 fcd draft examples/exm101_ad_ph3/study.yaml --out out/ --provider anthropic   # or openai, xai
+fcd validate examples/exm101_ad_ph3/study.yaml   # check a study file before drafting
 fcd check --out out/                     # rerun deterministic checks after editing
 fcd check --out out/ --inject-error      # demo: a dose edit gets caught
 fcd approve 5 --by "Your Name" --out out/
@@ -40,7 +41,9 @@ fcd/checks.py                Deterministic consistency and traceability checks
 fcd/render.py                Markdown/Word output, SoA from data, appendices, sign-off log
 fcd/offline.py               Template mode, no model
 fcd/cli.py                   draft / check / approve / export
-.claude/skills/              Agent skills (SKILL.md), readable by Claude Code and Codex
+.claude/skills/              Agent skills: synopsis-interview, protocol-draft, protocol-check
+schemas/study.schema.json    JSON Schema for the study file (regenerate: fcd schema)
+examples/_template/          Blank study file to start from
 examples/                    Fictional studies only
 ```
 
